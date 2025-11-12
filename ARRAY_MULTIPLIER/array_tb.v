@@ -11,7 +11,7 @@ module array_tb;
 
     integer i;
 
-    array_multi uut (
+    array_multiplier uut (
         .A(test_A),
         .B(test_B),
         .Product(test_Product)

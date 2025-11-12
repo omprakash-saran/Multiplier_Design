@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module array_multi(
+module array_multiplier(
     input [15:0] A,    
     input [15:0] B,   
     output [31:0] Product    
@@ -43,7 +43,7 @@ module array_multi(
         end
     endgenerate
     
-    assign p = row_sum[15];
+    assign Product = row_sum[15];
 
 endmodule
 
