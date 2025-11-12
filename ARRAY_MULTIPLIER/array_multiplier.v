@@ -6,7 +6,7 @@ module array_multiplier(
     output [31:0] Product    
 );
 
-    // 1. Generate partial products (same as before)
+    // 1. Generate partial products 
     wire [15:0] pp [0:15];
     wire [31:0] p_shifted [0:15];
     
@@ -27,29 +27,29 @@ module array_multiplier(
         end
     endgenerate
 
-    wire [31:0] row_sum [0:15];
+    wire [31:0] sum [0:15];
     
-    assign row_sum[0] = p_shifted[0];
+    assign sum[0] = p_shifted[0];
     
     generate
         for (i = 1; i < 16; i = i + 1) begin : adder_chain
             ripple_carry_adder_32bit adder_inst (
-                .a(row_sum[i-1]),
+                .a(sum[i-1]),
                 .b(p_shifted[i]),
                 .cin(1'b0),
-                .sum(row_sum[i]),
+                .sum(sum[i]),
                 .cout() 
             );
         end
     endgenerate
     
-    assign Product = row_sum[15];
+    assign Product = sum[15];
 
 endmodule
 
 
 // 32-bit Ripple Carry Adder
-module ripple_carry_adder_32bit (
+module RCA_32bit (
     input [31:0] a,
     input [31:0] b,
     input cin,
@@ -62,7 +62,7 @@ module ripple_carry_adder_32bit (
     genvar i;
     generate
         for (i = 0; i < 32; i = i + 1) begin : bit_adder
-            full_adder_bit fa (
+            full_adder fa (
                 .a(a[i]),
                 .b(b[i]),
                 .cin(carry[i]),
@@ -76,7 +76,7 @@ module ripple_carry_adder_32bit (
 endmodule
 
 // 1-bit Full Adder
-module full_adder_bit (
+module full_adder (
     input a, b, cin,
     output s, cout
 );
